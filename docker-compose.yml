@@ -1,0 +1,47 @@
+services:
+  frontend-cliente:
+    image: nginx:alpine
+    container_name: dondelis-frontend-cliente
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    volumes:
+      - ./frontend/cliente:/usr/share/nginx/html
+      - ./frontend/admin:/usr/share/nginx/html/admin:ro
+    networks:
+      - dondelis
+
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_SECURE_COOKIE=false
+      - GENERIC_TIMEZONE=America/Guatemala
+      - TZ=America/Guatemala
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - dondelis
+
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=dondelis
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - dondelis
+
+volumes:
+  n8n_data:
+  pg_data:
+
+networks:
+  dondelis:

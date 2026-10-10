@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bistro Donde Lis · Pedidos</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+
+  <!-- ===== Encabezado único, fuera de las vistas (misma estructura que el admin) ===== -->
+  <header id="encabezado-global" class="encabezado">
+    <div class="encabezado-simple">
+      <button id="btn-volver-menu-pedido" class="btn-volver-icono oculto" type="button">←</button>
+      <h1 id="titulo-encabezado">Bistro Donde Lis</h1>
+    </div>
+    <p id="subtitulo-encabezado" class="subtitulo">Menú de hoy · Almuerzo</p>
+  </header>
+
+  <!-- ===== Vista 1: Menú del día ===== -->
+  <section id="vista-menu" class="vista">
+    <main class="contenido">
+      <div id="lista-platillos" class="lista-platillos">
+        <p class="aviso">Cargando menú…</p>
+      </div>
+    </main>
+
+    <button id="barra-ver-pedido" class="barra-inferior oculto" type="button">
+      Ver pedido
+    </button>
+  </section>
+
+  <!-- ===== Vista 2: Tu pedido (carrito + formulario) ===== -->
+  <section id="vista-pedido" class="vista oculto">
+    <main class="contenido">
+      <h2 class="titulo-seccion">Platillos seleccionados</h2>
+      <div id="lista-carrito" class="lista-carrito"></div>
+
+      <div class="total-pedido">
+        <span>Total</span>
+        <strong id="total-pedido">Q0.00</strong>
+      </div>
+
+      <h2 class="titulo-seccion">Tus datos</h2>
+      <form id="form-pedido" class="formulario">
+        <label>
+          Nombre completo
+          <input type="text" name="cliente_nombre" placeholder="Ej. Juan Pérez" required />
+        </label>
+        <label>
+          Teléfono
+          <input type="tel" name="cliente_telefono" placeholder="Ej. 5021 2345 678" required />
+        </label>
+        <label>
+          Correo electrónico
+          <input type="email" name="cliente_email" placeholder="Ej. juan@correo.com" required />
+        </label>
+
+        <fieldset class="tipo-entrega">
+          <legend>Tipo de entrega</legend>
+          <label class="opcion-entrega">
+            <input type="radio" name="tipo_entrega" value="domicilio" required />
+            Domicilio
+          </label>
+          <label class="opcion-entrega">
+            <input type="radio" name="tipo_entrega" value="recoger" />
+            Recoger
+          </label>
+          <label class="opcion-entrega">
+            <input type="radio" name="tipo_entrega" value="mesa" />
+            Comer en mesa
+          </label>
+        </fieldset>
+
+        <button type="submit" class="barra-inferior barra-inferior-estatica">
+          Confirmar Pedido
+        </button>
+      </form>
+    </main>
+  </section>
+
+  <!-- ===== Vista 3: Resultado (éxito / error / mesas deshabilitadas) ===== -->
+  <section id="vista-resultado" class="vista oculto">
+    <main id="contenido-resultado" class="contenido contenido-resultado"></main>
+  </section>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+:root {
+  --color-primario: #D93E48;
+  --color-primario-oscuro: #B9323B;
+  --color-texto: #252525;
+  --color-secundario: #808080;
+  --color-fondo: #F7F7F7;
+  --color-borde: #E6E6E6;
+  --color-exito-fondo: #E5F5E8;
+  --color-exito-texto: #389957;
+  --color-aviso-fondo: #FAE5E5;
+  --color-aviso-texto: #D93E48;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+.oculto { display: none !important; }
+
+.vista {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 70px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .vista { max-width: 720px; box-shadow: 0 0 24px rgba(0,0,0,0.06); }
+}
+
+.encabezado {
+  background: var(--color-primario);
+  color: #fff;
+  padding: 24px 20px;
+}
+
+.encabezado h1 { margin: 0; font-size: 22px; }
+.encabezado .subtitulo { margin: 4px 0 0; font-size: 14px; opacity: 0.9; }
+
+.encabezado-simple {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-volver-icono {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.contenido {
+  flex: 1;
+  padding: 20px 16px;
+}
+
+.titulo-seccion {
+  font-size: 14px;
+  color: var(--color-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 20px 0 10px;
+}
+
+.aviso {
+  color: var(--color-secundario);
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* Tarjetas de platillo */
+.lista-platillos { display: flex; flex-direction: column; gap: 12px; }
+
+.card-platillo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.card-platillo h3 { margin: 0 0 4px; font-size: 16px; }
+.card-platillo .precio { margin: 0; color: var(--color-primario); font-weight: 600; }
+
+.btn-agregar {
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-agregar:hover { background: var(--color-primario-oscuro); }
+
+/* Carrito */
+.lista-carrito { display: flex; flex-direction: column; gap: 10px; }
+
+.fila-carrito {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-borde);
+  padding-bottom: 10px;
+}
+
+.fila-carrito .nombre { margin: 0; font-size: 15px; }
+.fila-carrito .precio { margin: 2px 0 0; color: var(--color-secundario); font-size: 13px; }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+.stepper button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  width: 22px;
+}
+
+.total-pedido {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--color-borde);
+  font-size: 16px;
+}
+
+/* Formulario */
+.formulario { display: flex; flex-direction: column; gap: 14px; margin-top: 6px; }
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-secundario);
+}
+.formulario input[type="text"],
+.formulario input[type="tel"],
+.formulario input[type="email"] {
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  color: var(--color-texto);
+}
+
+.tipo-entrega {
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 12px;
+}
+.tipo-entrega legend { font-size: 13px; color: var(--color-secundario); padding: 0 4px; }
+.opcion-entrega {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--color-texto) !important;
+  padding: 6px 0;
+}
+
+/* Barra inferior / botones principales */
+.barra-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .barra-inferior { max-width: 720px; }
+}
+
+/* Escritorio / laptop: aprovechar el ancho disponible. El encabezado ya
+   no vive dentro de .vista (ver index.html), así que es hermano directo
+   de <body> y sale a todo el ancho de forma natural, sin trucos de CSS —
+   igual que en el panel de administración. */
+@media (min-width: 1024px) {
+  #vista-menu.vista,
+  #vista-pedido.vista,
+  #vista-resultado.vista {
+    max-width: none;
+    width: 100%;
+    box-shadow: none;
+    background: var(--color-fondo);
+  }
+
+  #vista-menu .contenido,
+  #vista-pedido .contenido {
+    max-width: 1040px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* La pantalla de resultado se queda angosta: un mensaje de
+     confirmación centrado se ve mejor que uno estirado */
+  #vista-resultado .contenido {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #vista-menu .barra-inferior {
+    max-width: 1040px;
+  }
+
+  /* Menú en grid de 2 columnas en lugar de una sola columna larga */
+  #vista-menu .lista-platillos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  /* Pedido: resumen del carrito a la izquierda, formulario a la derecha,
+     en vez de una columna larga que deja vacíos los lados. */
+  #vista-pedido .contenido {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  #vista-pedido .contenido h2:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+  #vista-pedido #lista-carrito { grid-column: 1; grid-row: 2; }
+  #vista-pedido .total-pedido { grid-column: 1; grid-row: 3; }
+
+  #vista-pedido .contenido h2:nth-of-type(2) { grid-column: 2; grid-row: 1; }
+  #vista-pedido #form-pedido { grid-column: 2; grid-row: 2 / 4; }
+}
+
+/* Pantallas muy anchas: aprovechar más espacio */
+@media (min-width: 1280px) {
+  #vista-menu .contenido,
+  #vista-pedido .contenido {
+    max-width: 1200px;
+  }
+
+  #vista-menu .barra-inferior {
+    max-width: 1200px;
+  }
+
+  #vista-menu .lista-platillos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.barra-inferior-estatica {
+  position: static;
+  transform: none;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Resultado */
+.contenido-resultado {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.icono-check, .icono-aviso {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+}
+.icono-check { background: var(--color-exito-fondo); color: var(--color-exito-texto); }
+.icono-aviso { background: var(--color-aviso-fondo); color: var(--color-aviso-texto); }
+
+.contenido-resultado h2 { margin: 0 0 10px; }
+.contenido-resultado p { color: var(--color-secundario); margin: 0 0 20px; }
+
+.resumen {
+  background: var(--color-fondo);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.resumen p { color: var(--color-texto); margin: 6px 0; }
+
+.contenido-resultado button {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.btn-volver { background: var(--color-primario); color: #fff; }
+.btn-intentar, .btn-cambiar-entrega { background: var(--color-fondo); color: var(--color-texto); border: 1px solid var(--color-borde) !important; }

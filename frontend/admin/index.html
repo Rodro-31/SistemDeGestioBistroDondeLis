@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bistro Donde Lis · Admin</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+  <header class="encabezado">
+    <h1>Donde Lis · Admin</h1>
+    <button type="button" id="btn-cerrar-sesion" class="btn-texto oculto">Cerrar sesión</button>
+  </header>
+
+  <main>
+    <section id="vista-login" class="vista">
+      <h2>Acceso de administrador</h2>
+      <form id="form-login">
+        <label for="clave-admin">Clave de acceso</label>
+        <input type="password" id="clave-admin" required autocomplete="current-password">
+        <button type="submit" class="btn-primario">Entrar</button>
+      </form>
+      <p id="login-error" class="aviso-error oculto"></p>
+    </section>
+
+    <section id="vista-admin" class="vista oculto">
+      <nav class="tabs">
+        <button type="button" class="tab-btn activo" data-vista="publicar-menu">Publicar Menú</button>
+        <button type="button" class="tab-btn" data-vista="disponibilidad">Disponibilidad</button>
+        <button type="button" class="tab-btn" data-vista="pedidos">Pedidos</button>
+      </nav>
+
+      <section id="panel-publicar-menu" class="panel">
+        <h2>Publicar menú del día</h2>
+        <form id="form-publicar-menu">
+          <label for="fecha-vigencia">Fecha de vigencia</label>
+          <input type="date" id="fecha-vigencia" required>
+
+          <label for="hora-bloqueo">Hora de bloqueo</label>
+          <input type="time" id="hora-bloqueo" required>
+
+          <h3>Platillos</h3>
+          <div id="lista-platillos-form"></div>
+          <button type="button" id="btn-agregar-platillo" class="btn-secundario">+ Agregar platillo</button>
+
+          <button type="submit" class="btn-primario">Publicar Menú</button>
+        </form>
+        <div id="resultado-publicar"></div>
+      </section>
+
+      <section id="panel-disponibilidad" class="panel oculto">
+        <h2>Disponibilidad</h2>
+        <div class="toggle-mesas">
+          <label>
+            <input type="checkbox" id="toggle-mesas">
+            Habilitar pedidos para comer en mesa
+          </label>
+        </div>
+        <div id="resultado-mesas"></div>
+        <h3>Stock del menú de hoy</h3>
+        <div id="lista-stock"></div>
+      </section>
+
+      <section id="panel-pedidos" class="panel oculto">
+        <h2>Pedidos</h2>
+        <div id="lista-pedidos"></div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
