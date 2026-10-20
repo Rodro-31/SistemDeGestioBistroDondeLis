@@ -1,4 +1,4 @@
-import { enviarJSON } from './apiClient.js';
+import { obtener, enviarJSON } from './apiClient.js';
 
 export function publicarMenu(datos) {
   return enviarJSON('publicar-menu', datos);
@@ -6,6 +6,10 @@ export function publicarMenu(datos) {
 
 export function actualizarMesas(habilitado) {
   return enviarJSON('admin/mesas', { habilitado });
+}
+
+export function obtenerEstadoMesas() {
+  return obtener('admin/mesas');
 }
 
 export function actualizarStock(item_almuerzo_id, cantidad_disponible) {

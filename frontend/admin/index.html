@@ -65,6 +65,23 @@
 
       <section id="panel-pedidos" class="panel oculto">
         <h2>Pedidos</h2>
+        <div class="filtros-pedidos">
+          <div class="campo-filtro">
+            <label for="buscar-codigo">Buscar por código</label>
+            <input type="text" id="buscar-codigo" placeholder="Ej. PED-120033" autocomplete="off">
+          </div>
+          <div class="filtro-rango-fechas">
+            <div class="campo-filtro">
+              <label for="fecha-desde">Desde</label>
+              <input type="date" id="fecha-desde">
+            </div>
+            <div class="campo-filtro">
+              <label for="fecha-hasta">Hasta</label>
+              <input type="date" id="fecha-hasta">
+            </div>
+          </div>
+          <button type="button" id="btn-limpiar-filtros" class="btn-secundario">Limpiar filtros</button>
+        </div>
         <div id="lista-pedidos"></div>
       </section>
     </section>

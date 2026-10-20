@@ -58,18 +58,20 @@
 
         <fieldset class="tipo-entrega">
           <legend>Tipo de entrega</legend>
-          <label class="opcion-entrega">
-            <input type="radio" name="tipo_entrega" value="domicilio" required />
-            Domicilio
-          </label>
-          <label class="opcion-entrega">
-            <input type="radio" name="tipo_entrega" value="recoger" />
-            Recoger
-          </label>
-          <label class="opcion-entrega">
-            <input type="radio" name="tipo_entrega" value="mesa" />
-            Comer en mesa
-          </label>
+          <div class="opciones-entrega">
+            <label class="opcion-entrega">
+              <input type="radio" name="tipo_entrega" value="domicilio" required />
+              <span>Domicilio</span>
+            </label>
+            <label class="opcion-entrega">
+              <input type="radio" name="tipo_entrega" value="recoger" />
+              <span>Recoger</span>
+            </label>
+            <label class="opcion-entrega">
+              <input type="radio" name="tipo_entrega" value="mesa" />
+              <span>Comer en mesa</span>
+            </label>
+          </div>
         </fieldset>
 
         <button type="submit" class="barra-inferior barra-inferior-estatica">

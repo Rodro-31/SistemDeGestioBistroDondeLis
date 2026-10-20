@@ -2,7 +2,7 @@
 // igual que el main.js del sitio de cliente.
 import { guardarClave, haySesion, cerrarSesion } from './api/authService.js';
 import { obtenerMenuDelDia } from './api/menuService.js';
-import { publicarMenu, actualizarMesas, actualizarStock } from './api/adminService.js';
+import { publicarMenu, actualizarMesas, actualizarStock, obtenerEstadoMesas } from './api/adminService.js';
 import { validarMenu } from './dominio/validarMenu.js';
 import { agregarFilaPlatillo, leerPlatillosForm, limpiarPlatillosForm } from './ui/renderFormularioMenu.js';
 import { renderListaStock } from './ui/renderDisponibilidad.js';
@@ -32,6 +32,12 @@ const listaStock = document.getElementById('lista-stock');
 
 const panelPedidos = document.getElementById('panel-pedidos');
 const listaPedidos = document.getElementById('lista-pedidos');
+const inputBuscarCodigo = document.getElementById('buscar-codigo');
+const inputFechaDesde = document.getElementById('fecha-desde');
+const inputFechaHasta = document.getElementById('fecha-hasta');
+const btnLimpiarFiltros = document.getElementById('btn-limpiar-filtros');
+
+let pedidosActuales = [];
 
 function mostrarAdmin() {
   vistaLogin.classList.add('oculto');
@@ -118,6 +124,13 @@ toggleMesas.addEventListener('change', async () => {
 });
 
 async function cargarDisponibilidad() {
+  try {
+    const estadoMesas = await obtenerEstadoMesas();
+    toggleMesas.checked = Boolean(estadoMesas && estadoMesas.habilitado);
+  } catch (error) {
+    // si falla la consulta del estado actual, seguimos sin bloquear el resto del panel
+  }
+
   listaStock.innerHTML = '<p class="aviso">Cargando…</p>';
   try {
     const platillos = await obtenerMenuDelDia();
@@ -133,19 +146,58 @@ async function cargarDisponibilidad() {
 async function cargarPedidos() {
   listaPedidos.innerHTML = '<p class="aviso">Cargando…</p>';
   try {
-    const pedidos = await obtenerPedidos();
-    renderListaPedidos(listaPedidos, pedidos, async (codigo, nuevoEstado, elementoResultado) => {
-      const respuesta = await actualizarEstadoPedido(codigo, nuevoEstado);
-      if (respuesta && respuesta.success) {
-        cargarPedidos();
-      } else {
-        mostrarResultadoFila(elementoResultado, respuesta);
-      }
-    });
+    pedidosActuales = await obtenerPedidos();
+    aplicarFiltrosPedidos();
   } catch (error) {
     listaPedidos.innerHTML = `<p class="aviso">${error.message}</p>`;
   }
 }
+
+function pedidoCoincideFiltro(pedido, texto, desde, hasta) {
+  if (texto && !pedido.codigo.toLowerCase().includes(texto)) {
+    return false;
+  }
+  if (desde || hasta) {
+    const fecha = new Date(pedido.creado_en);
+    if (desde && fecha < new Date(`${desde}T00:00:00`)) return false;
+    if (hasta && fecha > new Date(`${hasta}T23:59:59`)) return false;
+  }
+  return true;
+}
+
+function aplicarFiltrosPedidos() {
+  const texto = inputBuscarCodigo.value.trim().toLowerCase();
+  const desde = inputFechaDesde.value;
+  const hasta = inputFechaHasta.value;
+
+  const filtrados = pedidosActuales.filter((pedido) =>
+    pedidoCoincideFiltro(pedido, texto, desde, hasta)
+  );
+
+  if (pedidosActuales.length > 0 && filtrados.length === 0) {
+    listaPedidos.innerHTML = '<p class="aviso">Ningún pedido coincide con el filtro.</p>';
+    return;
+  }
+
+  renderListaPedidos(listaPedidos, filtrados, async (codigo, nuevoEstado, elementoResultado) => {
+    const respuesta = await actualizarEstadoPedido(codigo, nuevoEstado);
+    if (respuesta && respuesta.success) {
+      cargarPedidos();
+    } else {
+      mostrarResultadoFila(elementoResultado, respuesta);
+    }
+  });
+}
+
+inputBuscarCodigo.addEventListener('input', aplicarFiltrosPedidos);
+inputFechaDesde.addEventListener('change', aplicarFiltrosPedidos);
+inputFechaHasta.addEventListener('change', aplicarFiltrosPedidos);
+btnLimpiarFiltros.addEventListener('click', () => {
+  inputBuscarCodigo.value = '';
+  inputFechaDesde.value = '';
+  inputFechaHasta.value = '';
+  aplicarFiltrosPedidos();
+});
 
 // Arranque: si ya hay una clave guardada en esta pestaña, entra directo al panel.
 if (haySesion()) {

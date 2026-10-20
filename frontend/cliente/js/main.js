@@ -48,7 +48,12 @@ function actualizarBarraInferior() {
     return;
   }
   barraVerPedido.classList.remove('oculto');
-  barraVerPedido.textContent = `Ver pedido (${obtenerItems().length}) · Q${obtenerTotal().toFixed(2)}`;
+  const cantidad = obtenerItems().length;
+  const palabraItem = cantidad === 1 ? 'artículo' : 'artículos';
+  barraVerPedido.innerHTML = `
+    <span class="barra-texto-principal">Ver pedido</span>
+    <span class="barra-texto-secundario">Q${obtenerTotal().toFixed(2)} · ${cantidad} ${palabraItem}</span>
+  `;
 }
 
 async function cargarMenu() {
